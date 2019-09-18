@@ -116,7 +116,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue $PRIMARY_FG ' %~ '
+  prompt_segment white $PRIMARY_FG ' %~ '
 }
 
 # Status:
@@ -134,8 +134,13 @@ prompt_status() {
 }
 
 # Display current virtual environment
+# Test fisrt for CONDA environnement then VIRTUAL_ENV
 prompt_virtualenv() {
-  if [[ -n $VIRTUAL_ENV ]]; then
+  if [[ -n $CONDA_DEFAULT_ENV]]; then
+    color=cyan
+    prompt_segment $color $PRIMARY_FG
+    print -Pn " $(basename $CONDA_DEFAULT_ENV) "
+  elif [[ -n $VIRTUAL_ENV ]]; then
     color=cyan
     prompt_segment $color $PRIMARY_FG
     print -Pn " $(basename $VIRTUAL_ENV) "
